@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>ElectroHub - Shopping Cart</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #F8FAFC; color: #1e293b; }
+        .header { background: linear-gradient(135deg, #1E3A8A, #1e40af); color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .cart-container { max-width: 1200px; margin: 2rem auto; padding: 0 2rem; }
+        .cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .cart-title { color: #1E3A8A; font-size: 2.5rem; }
+        .cart-empty { text-align: center; padding: 4rem; color: #64748b; }
+        .cart-items { display: flex; flex-direction: column; gap: 1.5rem; }
+        .cart-item { background: white; border-radius: 16px; padding: 1.5rem; display: flex; gap: 1rem; align-items: center; box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+        .cart-item img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; }
+        .item-details { flex: 1; }
+        .item-details h3 { color: #1E3A8A; margin-bottom: 0.5rem; font-size: 1.2rem; }
+        .item-details .price { color: #F59E0B; font-size: 1.2rem; font-weight: bold; }
+        .quantity-controls { display: flex; align-items: center; gap: 0.5rem; background: #f1f5f9; padding: 0.5rem 1rem; border-radius: 25px; }
+        .quantity-controls button { background: #0D9488; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-weight: bold; font-size: 1.1rem; transition: all 0.2s; }
+        .quantity-controls button:hover { background: #0f766e; transform: scale(1.05); }
+        .quantity-display { min-width: 30px; text-align: center; font-weight: bold; color: #1E3A8A; }
+        .item-total { font-size: 1.2rem; font-weight: bold; color: #F59E0B; min-width: 100px; text-align: right; }
+        .btn-remove { background: linear-gradient(45deg, #DC2626, #ef4444); color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 25px; cursor: pointer; font-weight: bold; transition: all 0.3s; }
+        .btn-remove:hover { background: linear-gradient(45deg, #b91c1c, #dc2626); transform: scale(1.05); }
+        .total-section { background: white; border-radius: 20px; padding: 2rem; margin-top: 3rem; text-align: center; box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
+        .total-price { color: #F59E0B; font-size: 2.5rem; font-weight: bold; margin: 1rem 0; }
+        .btn-checkout, .btn-checkout-login { color: white; text-decoration: none; display: inline-block; padding: 1.2rem 3rem; border-radius: 50px; font-size: 1.3rem; font-weight: bold; cursor: pointer; margin-top: 1rem; transition: all 0.3s; }
+        .btn-checkout { background: linear-gradient(45deg, #10B981, #059669); }
+        .btn-checkout-login { background: linear-gradient(45deg, #1E3A8A, #1e40af); }
+        .btn-checkout:hover, .btn-checkout-login:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(16,185,129,0.4); }
+        .back-btn { display: inline-block; margin: 1rem 0 2rem 0; padding: 0.8rem 2rem; background: #1E3A8A; color: white; text-decoration: none; border-radius: 25px; font-weight: 500; }
+        .login-required { color: #DC2626; font-size: 1.1rem; margin-top: 1rem; }
+    </style>
+</head>
+<body>
+<header class="header">
+    <div style="font-size: 1.8rem; font-weight: bold;">⚡ ElectroHub</div>
+    <div>
+            <span th:if="${session.user != null}" style="color: white; margin-right: 1rem;">
+                Hi, <span th:text="${session.user}">User</span> |
+                <a th:href="@{/login/logout}" style="color: white; text-decoration: none;">Logout</a>
+            </span>
+        <span th:if="${session.user == null}">
+                <a th:href="@{/login}" style="color: white; margin-right: 1rem; text-decoration: none;">🔐 Login</a>
+            </span>
+        <a th:href="@{/cart}" style="color: white; text-decoration: none;">
+            🛒 Cart (<span th:text="${#lists.size(cartItems)}">0</span>)
+        </a>
+    </div>
+</header>
+
+<div class="cart-container">
+    <div class="cart-header">
+        <h1 class="cart-title">🛒 Shopping Cart</h1>
+        <a th:href="@{/}" class="back-btn">← Continue Shopping</a>
+    </div>
+
+    <div th:if="${cartItems == null or #lists.isEmpty(cartItems)}" class="cart-empty">
+        <h2>Your cart is empty</h2>
+        <p>Add some products from our categories to get started!</p>
+    </div>
+
+    <div th:if="${cartItems != null and !#lists.isEmpty(cartItems)}" class="cart-items">
+        <div th:each="item : ${cartItems}" class="cart-item">
+            <img th:src="${item.product.image}" th:alt="${item.product.name}">
+            <div class="item-details">
+                <h3 th:text="${item.product.name}">Product Name</h3>
+                <p class="price" th:text="${item.product.price}">Price</p>
+            </div>
+            <div class="quantity-controls">
+                <form th:action="@{/cart/decrement}" method="post" style="display: inline;">
+                    <input type="hidden" th:name="productName" th:value="${item.product.name}">
+                    <button type="submit">-</button>
+                </form>
+                <span class="quantity-display" th:text="${item.quantity}">1</span>
+                <form th:action="@{/cart/increment}" method="post" style="display: inline;">
+                    <input type="hidden" th:name="productName" th:value="${item.product.name}">
+                    <button type="submit">+</button>
+                </form>
+            </div>
+            <div class="item-total">
+                $<span th:text="${#numbers.formatDecimal(item.totalPrice, 0, 'COMMA', 2, 'POINT')}">0</span>
+            </div>
+            <form th:action="@{/cart/remove}" method="post" style="display: inline;">
+                <input type="hidden" th:name="productName" th:value="${item.product.name}">
+                <button type="submit" class="btn-remove">🗑️ Remove</button>
+            </form>
+        </div>
+
+        <div class="total-section">
+            <h3>Total Items: <span th:text="${#lists.size(cartItems)}">0</span></h3>
+            <div class="total-price">
+                $<span th:text="${#numbers.formatDecimal(totalAmount, 0, 'COMMA', 2, 'POINT')}">0</span>
+            </div>
+            <div th:if="${session.user == null}">
+                <a th:href="@{/login}" class="btn-checkout-login">🔐 Login to Checkout</a>
+                <p class="login-required">Please login to proceed with checkout</p>
+            </div>
+            <div th:if="${session.user != null}">
+                <a th:href="@{/checkout}" class="btn-checkout">🚀 Proceed to Checkout</a>
+                <p style="color: #10B981; font-weight: 500;">Ready to complete your order!</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

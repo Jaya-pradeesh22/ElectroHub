@@ -1,0 +1,200 @@
+/* YOUR EXACT COLOR THEME */
+:root {
+    --primary-dark: #1E3A8A;
+    --secondary-teal: #0D9488;
+    --white: #FFFFFF;
+    --accent-red: #DC2626;
+    --highlight-yellow: #F59E0B;
+    --light-gray: #F8FAFC;
+}
+
+/* PERFECT GRID LAYOUT */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--light-gray);
+    color: #1e293b;
+}
+
+/* HEADER - Navy Blue */
+.header {
+    background: linear-gradient(135deg, var(--primary-dark), #1e40af);
+    color: white;
+    padding: 1rem 0;
+    box-shadow: 0 4px 20px rgba(30,58,138,0.3);
+}
+
+/* SIDEBAR - Always Visible */
+.sidebar {
+    position: fixed;
+    right: 20px;
+    top: 100px;
+    background: var(--white);
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.sidebar a {
+    display: block;
+    color: var(--primary-dark);
+    text-decoration: none;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.sidebar a:hover {
+    background: var(--secondary-teal);
+    color: white;
+}
+
+/* CATEGORY GRID - HOME PAGE */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 3rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.category-card {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    transition: all 0.4s ease;
+    cursor: pointer;
+    border: 4px solid transparent;
+}
+
+.category-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 25px 60px rgba(13,148,136,0.3);
+    border-color: var(--secondary-teal);
+}
+
+.category-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.category-info {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.category-info h3 {
+    color: var(--primary-dark);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* PRODUCT GRID */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+}
+
+.product-card {
+    background: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    transition: all 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(13,148,136,0.2);
+}
+
+.product-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.product-details h3 {
+    color: var(--primary-dark);
+    margin: 1rem 1rem 0.5rem;
+    font-size: 1.2rem;
+}
+
+.price {
+    color: var(--highlight-yellow);
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin: 0 1rem 1rem;
+}
+
+/* ADD TO CART BUTTON */
+.btn-add-cart {
+    background: linear-gradient(45deg, var(--accent-red), #ef4444);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s;
+}
+
+.btn-add-cart:hover {
+    background: linear-gradient(45deg, #dc2626, #b91c1c);
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(220,38,38,0.4);
+}
+
+/* PRODUCT DETAIL PAGE */
+.product-hero {
+    background: var(--white);
+    border-radius: 24px;
+    padding: 3rem;
+    margin: 2rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+}
+
+.product-gallery img {
+    width: 100%;
+    border-radius: 16px;
+    margin-bottom: 1rem;
+}
+
+/* CART PAGE */
+.cart-item {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.quantity-controls button {
+    background: var(--secondary-teal);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin: 0 0.5rem;
+}
+
+.total-price {
+    color: var(--highlight-yellow);
+    font-size: 2rem;
+    font-weight: bold;
+}

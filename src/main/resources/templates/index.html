@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>ElectroHub - Premium Electronics</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #F8FAFC;
+            color: #1e293b;
+        }
+
+        /* NEW CLEAN HEADER */
+        .header {
+            background: linear-gradient(135deg, #1E3A8A, #1e40af);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 20px rgba(30,58,138,0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { font-size: 1.8rem; font-weight: bold; }
+        .header-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        .header-links a:hover { background: rgba(255,255,255,0.2); }
+
+        /* OLD RESPONSIVE CATEGORY GRID (FIXED) */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 3rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(13,148,136,0.3);
+        }
+
+        .category-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .category-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .category-info h3 {
+            color: #1E3A8A;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-info p {
+            color: #64748b;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #1E3A8A;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+<!-- NEW CLEAN HEADER (Login + Cart Only) -->
+<header class="header">
+    <div class="logo">⚡ ElectroHub</div>
+    <div class="header-links">
+        <a href="/login">🔐 Login</a>
+        <a href="/cart">🛒 Cart (0)</a>
+    </div>
+</header>
+
+<!-- OLD RESPONSIVE GRID (Multiple Categories Visible) -->
+<main>
+    <section class="category-grid">
+        <!-- Smartphones -->
+        <div class="category-card" style="text-decoration: none;">
+            <a th:href="@{/category/smartphones}" style="text-decoration: none; color: inherit; display: block; height: 100%;">
+                <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&auto=format&fit=crop" alt="Smartphones">
+                <div class="category-info">
+                    <h3>📱 Smartphones</h3>
+                    <p>Latest iPhone, Samsung, OnePlus</p>
+                </div>
+            </a>
+        </div>
+
+
+        <!-- Laptops -->
+        <div class="category-card">
+            <a th:href="@{/category/laptops}" style="text-decoration: none; color: inherit; display: block; height: 100%;">
+            <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&auto=format&fit=crop" alt="Laptops">
+            <div class="category-info">
+                <h3>💻 Laptops & PCs</h3>
+                <p>MacBook, Dell, Gaming Rigs</p>
+            </div>
+            </a>
+        </div>
+
+        <!-- BLUETOOTH - FIXED IMAGE -->
+        <div class="category-card">
+            <a th:href="@{/category/bluetooth}" style="text-decoration: none; color: inherit; display: block; height: 100%;">
+            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&auto=format&fit=crop&h=200" alt="Bluetooth">
+            <div class="category-info">
+                <h3>🎧 Bluetooth</h3>
+                <p>AirPods, Speakers, Watches</p>
+            </div>
+            </a>
+        </div>
+
+        <!-- Televisions - Now using local image -->
+        <div class="category-card">
+            <a th:href="@{/category/televisions}" style="text-decoration: none; color: inherit; display: block; height: 100%;">
+            <img src="images/tv-qled-samsung.jpg.png"
+                 alt="Samsung QLED TV">
+            <div class="category-info">
+                <h3>📺 Televisions</h3>
+                <p>4K QLED • Smart TV • 65"+</p>
+            </div>
+            </a>
+        </div>
+
+
+
+        <!-- Cameras -->
+        <div class="category-card">
+            <a th:href="@{/category/cameras}" style="text-decoration: none; color: inherit; display: block; height: 100%;">
+            <img src="images/camera.png" alt="Cameras">
+            <div class="category-info">
+                <h3>📷 Cameras</h3>
+                <p>DSLR, Mirrorless, Action</p>
+            </div>
+            </a>
+        </div>
+
+        <!-- Gaming -->
+        <div class="category-card">
+            <a th:href="@{/category/gaming}" style="text-decoration: none; color: inherit; display: block; height: 100%;">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&auto=format&fit=crop" alt="Gaming">
+            <div class="category-info">
+                <h3>🎮 Gaming</h3>
+                <p>PS5, Xbox, Accessories</p>
+            </div>
+            </a>
+        </div>
+    </section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+    <p>© 2026 ElectroHub. Made with ❤️ in Bengaluru</p>
+</footer>
+</body>
+</html>
